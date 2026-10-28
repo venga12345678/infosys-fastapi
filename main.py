@@ -48,6 +48,21 @@ def get_employees():
     return list(employees.values())
 
 
+# Search employees by department
+@app.get("/employees/search")
+def search_employees(department: str):
+    results = [
+        employee
+        for employee in employees.values()
+        if employee["department"].lower() == department.lower()
+    ]
+    return {
+        "department": department,
+        "total_employees": len(results),
+        "employees": results
+    }
+
+
 # Get employee by ID
 @app.get("/employees/{employee_id}")
 def get_employee(employee_id: int):
